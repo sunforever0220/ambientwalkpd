@@ -3,6 +3,10 @@ This is the android project for 'Ambient Walk' app using LibPd for data sonifica
 
 The app uses a microphone and an accelerometer of your mobile phone to detect your breathing period and walking pace during your walking meditation. It then generate responsive sound effect based on your walking data to foster your meditation practice.
 
+#Latest Change (4th Commit)
+Changed the sonification for breathing period in ambientwalk.pd.
+Edited the threshold for peak detection. 
+
 #3rd Commit
 Added attack/decay envelope to represent breathing period in Ambientwalk.pd. 
 
