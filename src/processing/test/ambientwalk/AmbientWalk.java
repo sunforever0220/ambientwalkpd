@@ -15,7 +15,7 @@ import android.hardware.SensorManager;
 import java.io.File;  
 import java.io.PrintWriter; 
 import java.io.InputStream;  
-import java.io.IOException; 
+import java.io.IOException;
 
 import org.puredata.android.io.AudioParameters;
 import org.puredata.android.io.PdAudio;
@@ -51,7 +51,7 @@ public class AmbientWalk extends PApplet {
     //--flag whether user tapped the screen
     boolean button_clicked=false,mouse_enabled=false;
 //vars for finding peak of breath sound
-    int current_peak=0,prev_peak=0;
+    int current_peak=0,prev_peak=0,recstart=0;
     //breath period, received from pd patch
    float period=0,ratio=1,volume=0;//threshold=50;
  
@@ -147,10 +147,15 @@ public void draw() //update per frame, stop working when screen locked
    text("Threshold", width*5/6,height/6);
    text(""+threshold, width*5/6,height/6+12);
    stroke(255);noFill();
+
    rect(width*5/6,height/6+20,20,400);
  rect(width*5/6,height/6+420-threshold*4,20,10);//slider
  */
-   textSize(20); 
+  // textSize(20); 
+  // rect(width*5/6,height/6+20,20,height*2/3);
+ //rect(width*5/6,mouseY,20,10);//slider
+   textSize(30); 
+
    String period2decimal = String.format("%.2f", period);
 text("Breath Period: " + period2decimal+"s", width/10, height*4/5); 
  text("Number of Steps: "+stepcount, width/10,height*5/6);
@@ -437,6 +442,8 @@ public void initPd() throws IOException {
 		patchFile = IoUtils.extractResource(in, "ambientwalk.pd", getCacheDir());
 		PdBase.openPatch(patchFile);
 		PdAudio.startAudio(this);
+		recstart=1;
+		PdBase.sendFloat("#rec", recstart);
 	} catch (IOException e) {
 		//Log.e(TAG, e.toString());
 		finish();
